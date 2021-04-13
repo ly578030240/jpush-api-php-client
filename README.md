@@ -1,10 +1,11 @@
-# JPush API PHP Client
+# JPush API PHP Client for hyperf
 
 这是 JPush REST API 的 PHP 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API 功能。
+声明：本版本为极光推送sdk，在此基础上修改curl部分，以支持hyperf框架，暂时为个人项目使用，他人使用产生的问题概不负责
 
 对应的 REST API 文档: https://docs.jiguang.cn/jpush/server/push/server_overview/
 
-> 支持的 PHP 版本: 5.3.3 ～ 5.6.x, 7.x
+> 支持的 PHP 版本:  7.x
 
 > 若需要兼容 PHP 5.3.3 以下版本，可以使用 [v3 分支的代码](https://github.com/jpush/jpush-api-php-client/tree/v3)。
 因为运行 Composer 需要 PHP 5.3.2+ 以上版本，所以其不提供 Composer 支持，
@@ -18,7 +19,7 @@
 
 ```json
 "require": {
-    "jpush/jpush": "*"
+    "ly578030240/jpush-hyperf": "*"
 }
 ```
 

@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=7.3",
         "ext-curl": "*",
         "hyperf/guzzle": "~2.1.0"
     },
