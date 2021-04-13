@@ -1,14 +1,14 @@
 {
-    "name": "jpush/jpush",
+    "name": "jpush/jpush-hyperf",
     "type": "library",
-    "description": "JPush API PHP Client",
-    "homepage": "https://github.com/jpush/jpush-api-php-client",
+    "description": "JPush API PHP Client For Hyperf",
+    "homepage": "https://github.com/ly578030240/jpush-api-php-client-hyperf",
     "license": "MIT",
     "authors": [
         {
-            "name": "JPush",
-            "email": "support@jpush.cn",
-            "homepage": "https://www.jpush.cn/",
+            "name": "JPush-hyperf",
+            "email": "578030240@qq.com",
+            "homepage": "https://github.com/ly578030240/jpush-api-php-client-hyperf",
             "role": "Developer"
         }
     ],
