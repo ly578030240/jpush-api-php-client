@@ -1,10 +1,11 @@
 <?php
 namespace JPush;
 use InvalidArgumentException;
-
+use Hyperf\Guzzle\ClientFactory;
 class DevicePayload {
     private $client;
 
+    private $coHttp;
     /**
      * DevicePayload constructor.
      * @param $client JPush
@@ -12,11 +13,12 @@ class DevicePayload {
     public function __construct($client)
     {
         $this->client = $client;
+        $this->coHttp=new CoHttp(ClientFactory::class);
     }
 
     public function getDevices($registrationId) {
         $url = $this->client->makeURL('device') . $registrationId;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client,$url);
     }
 
     public function updateAlias($registration_id, $alias) {
@@ -36,12 +38,12 @@ class DevicePayload {
 
     public function clearMobile($registrationId) {
         $url = $this->client->makeURL('device') . $registrationId;
-        return Http::post($this->client, $url, ['mobile' => '']);
+        return $this->coHttp->post($this->client, $url, ['mobile' => '']);
     }
 
     public function clearTags($registrationId) {
         $url = $this->client->makeURL('device') . $registrationId;
-        return Http::post($this->client, $url, ['tags' => '']);
+        return $this->coHttp->post($this->client, $url, ['tags' => '']);
     }
 
     public function updateDevice($registrationId, $alias = null, $mobile = null, $addTags = null, $removeTags = null) {
@@ -98,12 +100,12 @@ class DevicePayload {
         }
 
         $url = $this->client->makeURL('device') . $registrationId;
-        return Http::post($this->client, $url, $payload);
+        return $this->coHttp->post($this->client, $url, $payload);
     }
 
     public function getTags() {
         $url = $this->client->makeURL('tag');
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function isDeviceInTag($registrationId, $tag) {
@@ -115,7 +117,7 @@ class DevicePayload {
             throw new InvalidArgumentException("Invalid tag");
         }
         $url = $this->client->makeURL('tag') . $tag . '/registration_ids/' . $registrationId;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function addDevicesToTag($tag, $addDevices) {
@@ -158,7 +160,7 @@ class DevicePayload {
 
         $url = $this->client->makeURL('tag') . $tag;
         $payload = array('registration_ids'=>$registrationId);
-        return Http::post($this->client, $url, $payload);
+        return $this->coHttp->post($this->client, $url, $payload);
     }
 
     public function deleteTag($tag) {
@@ -193,7 +195,7 @@ class DevicePayload {
                 throw new InvalidArgumentException("Invalid platform");
             }
         }
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function deleteAlias($alias) {
@@ -219,6 +221,6 @@ class DevicePayload {
         }
         $payload['registration_ids'] = $registrationId;
         $url = $this->client->makeURL('device') . 'status';
-        return Http::post($this->client, $url, $payload);
+        return $this->coHttp->post($this->client, $url, $payload);
     }
 }

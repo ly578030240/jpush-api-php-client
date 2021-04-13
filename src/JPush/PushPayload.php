@@ -1,7 +1,7 @@
 <?php
 namespace JPush;
 use InvalidArgumentException;
-
+use Hyperf\Guzzle\ClientFactory;
 class PushPayload {
 
     private static $EFFECTIVE_DEVICE_TYPES = array('ios', 'android', 'winphone');
@@ -28,7 +28,7 @@ class PushPayload {
     private $smsMessage;
     private $message;
     private $options;
-
+    private $coHttp;
     /**
      * PushPayload constructor.
      * @param $client JPush
@@ -37,11 +37,12 @@ class PushPayload {
         $this->client = $client;
         $url = $this->client->is_group() ? 'grouppush' : 'push';
         $this->url = $this->client->makeURL('push') . $url;
+        $this->coHttp=new CoHttp(ClientFactory::class);
     }
 
     public function getCid($count = 1, $type = 'push') {
         $url = $this->client->makeURL('push') . 'push/cid?count=' . $count . '&type=' . $type;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function setCid($cid) {
@@ -320,12 +321,12 @@ class PushPayload {
     }
 
     public function send() {
-        return Http::post($this->client, $this->url, $this->build());
+        return $this->coHttp->post($this->client, $this->url, $this->build());
     }
 
     public function validate() {
         $url = $this->client->makeURL('push') . '/push/validate';
-        return Http::post($this->client, $url, $this->build());
+        return $this->coHttp->post($this->client, $url, $this->build());
     }
 
     private function generateSendno() {
@@ -704,7 +705,7 @@ class PushPayload {
             $body["pushlist"][$cid] = $singlePayloads[$i];
         }
         $url = $this->client->makeURL('push') . 'push/batch/regid/single';
-        return Http::post($this->client, $url, $body);
+        return $this->coHttp->post($this->client, $url, $body);
     }
 
     /*
@@ -721,6 +722,6 @@ class PushPayload {
             $body["pushlist"][$cid] = $singlePayloads[$i];
         }
         $url = $this->client->makeURL('push') . 'push/batch/alias/single';
-        return Http::post($this->client, $url, $body);
+        return $this->coHttp->post($this->client, $url, $body);
     }
 }

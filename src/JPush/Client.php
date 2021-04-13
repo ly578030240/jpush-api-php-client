@@ -56,6 +56,9 @@ class Client {
     public function getRetryTimes() { return $this->retryTimes; }
     public function getLogFile() { return $this->logFile; }
 
+    public function getAuthArray(){
+        return [$this->appKey,$this->masterSecret];
+    }
     public function is_group() {
         $str = substr($this->appKey, 0, 6);
         return $str === 'group-';
