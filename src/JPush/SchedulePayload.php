@@ -6,12 +6,14 @@ class SchedulePayload {
 
     private $client;
 
+    private $coHttp;
     /**
      * SchedulePayload constructor.
      * @param $client JPush
      */
     public function __construct($client) {
         $this->client = $client;
+        $this->coHttp=new CoHttp();
     }
 
     public function createSingleSchedule($name, $push_payload, $trigger) {
@@ -31,7 +33,7 @@ class SchedulePayload {
         $payload['push'] = $push_payload;
 
         $url = $this->client->makeURL('schedule');
-        return Http::post($this->client, $url, $payload);
+        return $this->coHttp->post($this->client, $url, $payload);
     }
 
     public function createPeriodicalSchedule($name, $push_payload, $trigger) {
@@ -51,7 +53,7 @@ class SchedulePayload {
         $payload['push'] = $push_payload;
 
         $url = $this->client->makeURL('schedule');
-        return Http::post($this->client, $url, $payload);
+        return $this->coHttp->post($this->client, $url, $payload);
     }
 
     public function updateSingleSchedule($schedule_id, $name=null, $enabled=null, $push_payload=null, $trigger=null) {
@@ -151,7 +153,7 @@ class SchedulePayload {
             $page = 1;
         }
         $url = $this->client->makeURL('schedule') . "?page=" . $page;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function getSchedule($schedule_id) {
@@ -159,7 +161,7 @@ class SchedulePayload {
             throw new InvalidArgumentException('Invalid schedule id');
         }
         $url = $this->client->makeURL('schedule') . "/" . $schedule_id;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function deleteSchedule($schedule_id) {
@@ -175,7 +177,7 @@ class SchedulePayload {
             throw new InvalidArgumentException('Invalid schedule id');
         }
         $url = $this->client->makeURL('schedule') . '/' . $schedule_id . '/msg_ids';
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
 }

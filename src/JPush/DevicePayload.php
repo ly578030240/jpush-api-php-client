@@ -1,7 +1,6 @@
 <?php
 namespace JPush;
 use InvalidArgumentException;
-use Hyperf\Guzzle\ClientFactory;
 class DevicePayload {
     private $client;
 
@@ -13,7 +12,7 @@ class DevicePayload {
     public function __construct($client)
     {
         $this->client = $client;
-        $this->coHttp=new CoHttp(ClientFactory::class);
+        $this->coHttp=new CoHttp();
     }
 
     public function getDevices($registrationId) {

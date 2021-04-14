@@ -6,7 +6,7 @@ class ReportPayload {
     private static $EFFECTIVE_TIME_UNIT = array('HOUR', 'DAY', 'MONTH');
 
     private $client;
-
+    private $coHttp;
     /**
      * ReportPayload constructor.
      * @param $client JPush
@@ -14,6 +14,7 @@ class ReportPayload {
     public function __construct($client)
     {
         $this->client = $client;
+        $this->coHttp=new CoHttp();
     }
 
     public function getReceived($msgIds) {
@@ -28,7 +29,7 @@ class ReportPayload {
         }
 
         $url = $this->client->makeURL('report') . 'received' . $queryParams;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     /*
@@ -47,7 +48,7 @@ class ReportPayload {
         }
 
         $url = $this->client->makeURL('report') . 'received/detail' . $queryParams;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function getMessageStatus($msgId, $rids, $data = null) {
@@ -60,7 +61,7 @@ class ReportPayload {
         if (!is_null($data)) {
             $body['data'] = $data;
         }
-        return Http::post($this->client, $url, $body);
+        return $this->coHttp->post($this->client, $url, $body);
     }
 
     public function getMessages($msgIds) {
@@ -75,7 +76,7 @@ class ReportPayload {
         }
 
         $url = $this->client->makeURL('report') . 'messages/' .$queryParams;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     /*
@@ -94,7 +95,7 @@ class ReportPayload {
         }
 
         $url = $this->client->makeURL('report') . 'messages/detail' .$queryParams;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 
     public function getUsers($time_unit, $start, $duration) {
@@ -104,6 +105,6 @@ class ReportPayload {
         }
 
         $url = $this->client->makeURL('report') . 'users/?time_unit=' . $time_unit . '&start=' . $start . '&duration=' . $duration;
-        return Http::get($this->client, $url);
+        return $this->coHttp->get($this->client, $url);
     }
 }

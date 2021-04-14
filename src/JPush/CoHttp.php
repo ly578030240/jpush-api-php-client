@@ -11,12 +11,12 @@ final class CoHttp {
      */
     private $clientFactory;
 
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct()
     {
-        $this->clientFactory = $clientFactory;
+        $this->clientFactory = \Hyperf\Utils\ApplicationContext::getContainer()->get(ClientFactory::class);
     }
 
-    public function httpClient($options=null)
+    public function httpClient($options=[])
     {
         // $options 等同于 GuzzleHttp\Client 构造函数的 $config 参数
         //$options = [];

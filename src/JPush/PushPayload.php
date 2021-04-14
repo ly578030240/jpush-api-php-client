@@ -1,7 +1,6 @@
 <?php
 namespace JPush;
 use InvalidArgumentException;
-use Hyperf\Guzzle\ClientFactory;
 class PushPayload {
 
     private static $EFFECTIVE_DEVICE_TYPES = array('ios', 'android', 'winphone');
@@ -37,7 +36,7 @@ class PushPayload {
         $this->client = $client;
         $url = $this->client->is_group() ? 'grouppush' : 'push';
         $this->url = $this->client->makeURL('push') . $url;
-        $this->coHttp=new CoHttp(ClientFactory::class);
+        $this->coHttp=new CoHttp();
     }
 
     public function getCid($count = 1, $type = 'push') {
