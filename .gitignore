@@ -16,3 +16,4 @@ vendor.tar.gz
 composer.phar
 vendor.zip
 examples/config.php
+.git/
