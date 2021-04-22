@@ -367,12 +367,12 @@ class PushPayload {
             }
             $ios = array_merge($notification, $ios);
         }
-        if (!isset($ios['sound'])) {
+        /*if (!isset($ios['sound'])) {
             $ios['sound'] = '';
         }
         if (!isset($ios['badge'])) {
             $ios['badge'] = '+1';
-        }
+        }*/
         $this->iosNotification = $ios;
         return $this;
     }
